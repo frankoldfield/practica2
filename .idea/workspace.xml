@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c11506f-7dc5-4f59-9b47-b525adec428a" name="Changes" comment="Ahora el valor del diccionario de enzimas es una lista que contiene la diana en primera posición y el lugar de corte en la segunda.">
+    <list default="true" id="4c11506f-7dc5-4f59-9b47-b525adec428a" name="Changes" comment="Implementado el diccionario de cadenas de ADN">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/practica2.py" beforeDir="false" afterPath="$PROJECT_DIR$/practica2.py" afterDir="false" />
     </list>
@@ -101,7 +101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668272327620</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Implementado el diccionario de cadenas de ADN">
+      <created>1668276196095</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1668276196096</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -132,6 +139,7 @@
     <MESSAGE value="Aqui he añadido la función que hace que cuando se repite una enzima en varias líneas, se guarda la expresión regular que contiene a todas las dianas asociadas&#10;&#10;Las dianas se siguen guardando como Strings por ahora" />
     <MESSAGE value="He movido las expresiones regulares y el comando para compilarlos para que se realicen una sola vez" />
     <MESSAGE value="Ahora el valor del diccionario de enzimas es una lista que contiene la diana en primera posición y el lugar de corte en la segunda." />
-    <option name="LAST_COMMIT_MESSAGE" value="Ahora el valor del diccionario de enzimas es una lista que contiene la diana en primera posición y el lugar de corte en la segunda." />
+    <MESSAGE value="Implementado el diccionario de cadenas de ADN" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementado el diccionario de cadenas de ADN" />
   </component>
 </project>
