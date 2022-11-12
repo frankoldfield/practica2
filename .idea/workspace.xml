@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c11506f-7dc5-4f59-9b47-b525adec428a" name="Changes" comment="He movido las expresiones regulares y el comando para compilarlos para que se realicen una sola vez">
+    <list default="true" id="4c11506f-7dc5-4f59-9b47-b525adec428a" name="Changes" comment="Ahora el valor del diccionario de enzimas es una lista que contiene la diana en primera posición y el lugar de corte en la segunda.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/practica2.py" beforeDir="false" afterPath="$PROJECT_DIR$/practica2.py" afterDir="false" />
     </list>
@@ -94,7 +94,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668254514022</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Ahora el valor del diccionario de enzimas es una lista que contiene la diana en primera posición y el lugar de corte en la segunda.">
+      <created>1668272327620</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1668272327620</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -124,6 +131,7 @@
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Aqui he añadido la función que hace que cuando se repite una enzima en varias líneas, se guarda la expresión regular que contiene a todas las dianas asociadas&#10;&#10;Las dianas se siguen guardando como Strings por ahora" />
     <MESSAGE value="He movido las expresiones regulares y el comando para compilarlos para que se realicen una sola vez" />
-    <option name="LAST_COMMIT_MESSAGE" value="He movido las expresiones regulares y el comando para compilarlos para que se realicen una sola vez" />
+    <MESSAGE value="Ahora el valor del diccionario de enzimas es una lista que contiene la diana en primera posición y el lugar de corte en la segunda." />
+    <option name="LAST_COMMIT_MESSAGE" value="Ahora el valor del diccionario de enzimas es una lista que contiene la diana en primera posición y el lugar de corte en la segunda." />
   </component>
 </project>

@@ -26,8 +26,6 @@ lineasgenes = genes.readlines() #Aqui guardamos las lineas del documento
 
 enzimas = open('link_bionet.txt')#Hay que eliminar las 10 primeras lineas
 lineasenzimas = enzimas.readlines() #Lineas del documento link_bionet.txt
-for linea in lineasgenes: #Vamos leyendo todas las lineas del documento
-    print(linea)
 
 patron_enzima = r'[A-Z]([A-Za-z]|\d){1,}' #Expresión regular que describe las enzimas
 er_enzima = re.compile(patron_enzima) #Compilamos esta expresión regular
@@ -37,6 +35,15 @@ patron_sustituye = r'[RYMKSWBDHVN]' #Este es el patrón de todos los caracteres 
 er_sustituye = re.compile(patron_sustituye) #Lo compilamos
 patron_corte = r'\^' #El patrón con el carácter ^
 er_corte = re.compile(patron_corte) #Lo compilamos
+
+patron_nombreCadenaADN = r'(?<=\>)(\.|\p{L}|\d)+(?= +)'
+er_nombreCadenaADN = re.compile(patron_nombreCadenaADN)
+nombreCadenaADN = ''
+patron_cadenaADN = r'(?<=^)(([ATCG]+ )+)?[ATCG]+'
+er_cadenaADN = re.compile(patron_cadenaADN)
+cadenaADN = ''
+patron_juntarCadena = r'( |\n|\r|\t)'
+er_juntarCadena = re.compile(patron_juntarCadena)
 
 Dic_enzimas = {} #Iniciamos el diccionario donde vamos a almacenar las enzimas y sus dianas
 Dic_ADN = {} #Iniciamos el diccionario donde vamos a almacenar las cadenas de ADN
@@ -64,9 +71,28 @@ for linea in lineasenzimas: #Recorremos todas las lineas del documento que conti
     Dic_enzimas[enzima] = [diana,posicion] #Añadimos la entrada de esta línea al diccionario, la clave es la encima y el contenido es la diana
     enzima_anterior=enzima #Aqui guardamos la enzima para que se compruebe si en la siguiente línea vuelve a aparecer la misma
 #Este for es el que crea el diccionario de las enzimas con sus dianas
+#TENGO QUE AÑADIR EL RECORRIDO PARA CONVERTIR EN EXPRESIONES REGULARES COMPILADAS LAS CADENAS
 
-for k in Dic_enzimas.keys(): #Esto sirve símplemente para recorrer el diccionario de las enzimas
-    print('%s tiene valor %s' % (k, Dic_enzimas[k]))
+#for k in Dic_enzimas.keys(): #Esto sirve símplemente para recorrer el diccionario de las enzimas
+#    print('%s tiene valor %s' % (k, Dic_enzimas[k]))
+
+for linea in lineasgenes:
+    nombreCadenaADN_res = er_nombreCadenaADN.search(linea)
+    cadenaADN_res = er_cadenaADN.search(linea)
+    if nombreCadenaADN_res:#if la linea contiene un nombre de cadena
+        cadenaADN = er_juntarCadena.sub('', cadenaADN)  # entonces guardamos la cadena de ADN, la formatamo
+        # print(cadenaADN)
+        Dic_ADN[nombreCadenaADN] = cadenaADN  # Y metemos en el diccionario la entrada
+        cadenaADN = ' '  # reseteamos la variable de cadena de adn a una cadena vacía
+        nombreCadenaADN = linea[nombreCadenaADN_res.start():nombreCadenaADN_res.end()]#entonces guardamos el nombre de la cadena
+    elif cadenaADN_res:#elif si la linea contiene cadena de adn
+        #print(linea[cadenaADN_res.start():cadenaADN_res.end()])
+        cadenaADN = cadenaADN+linea[cadenaADN_res.start():cadenaADN_res.end()]#la concatenamos a la variable cadena de adn existente
+
+for k in Dic_ADN.keys(): #Esto sirve símplemente para recorrer el diccionario de las enzimas
+    print('%s tiene valor %s' % (k, Dic_ADN[k]))
+
+
 #Proyecto final asignatura  de Autómatas y Lenguajes Formales, bioinformática
 
 #Primero importamos los archivos necesarios de las bases de datos
