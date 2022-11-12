@@ -38,12 +38,13 @@ er_sustituye = re.compile(patron_sustituye) #Lo compilamos
 patron_corte = r'\^' #El patrón con el carácter ^
 er_corte = re.compile(patron_corte) #Lo compilamos
 
-Diccionario = {} #Iniciamos el diccionario donde vamos a almacenar las enzimas y sus dianas
+Dic_enzimas = {} #Iniciamos el diccionario donde vamos a almacenar las enzimas y sus dianas
+Dic_ADN = {} #Iniciamos el diccionario donde vamos a almacenar las cadenas de ADN
 
 enzima = "" #Inicializamos la variable enzima
 diana = "" #Inicializamos la variable diana
-enzima_anterior = ""
-diana_anterior = ""
+enzima_anterior = " " #Aqui iniciamos la variable enzima_anterior
+posicion = ""
 
 for linea in lineasenzimas: #Recorremos todas las lineas del documento que contiene las enzimas
 
@@ -54,20 +55,18 @@ for linea in lineasenzimas: #Recorremos todas las lineas del documento que conti
     diana_res = er_diana.search(linea)
     if diana_res:#Si hay una diana en la linea que estamos recorriendo
         diana = linea[diana_res.start():diana_res.end()] #La diana será el trozo de texto que encaja con la expresión regular de las dianas en esa línea
-        diana = er_sustituye.sub(sust,diana) #Aqui invocamos la función sust, para sustituir todos los caracteres que tenemos que sustituir
-        #print(diana)
         posicion = quitacorte(diana) #Aqui invocamos la función quitacorte que nos dice la posición en la que se halla el carácter ^
+        diana = er_sustituye.sub(sust,diana) #Aqui invocamos la función sust, para sustituir todos los caracteres que tenemos que sustituir
         diana = er_corte.sub('',diana) #Ahora le quitamos el ^ a las dianas
-        #print(diana)
-        #print(posicion)
-    if (enzima == enzima_anterior): #Comprobamos si la enzima es la misma que la anterior
-        diana = "("+str(Diccionario.get(enzima_anterior))+"|"+diana+")" #Modificamos la entrada de la diana concatenando lo necesario (hay que hacer casting de la entrada del diccionario)
-    Diccionario[enzima] = diana #Añadimos la entrada de esta línea al diccionario, la clave es la encima y el contenido es la diana
-    enzima_anterior=enzima
-    diana_anterior=Diccionario.get(enzima_anterior)
 
-for k in Diccionario.keys(): #Esto sirve símplemente para recorrer el diccionario
-    print('%s tiene valor %s' % (k,Diccionario[k]))
+    if (enzima == enzima_anterior): #Comprobamos si la enzima es la misma que la anterior
+        diana = "(" + str(Dic_enzimas.get(enzima_anterior)[0]) + "|" + diana + ")" #Modificamos la entrada de la diana concatenando lo necesario (hay que hacer casting de la entrada del diccionario)
+    Dic_enzimas[enzima] = [diana,posicion] #Añadimos la entrada de esta línea al diccionario, la clave es la encima y el contenido es la diana
+    enzima_anterior=enzima #Aqui guardamos la enzima para que se compruebe si en la siguiente línea vuelve a aparecer la misma
+#Este for es el que crea el diccionario de las enzimas con sus dianas
+
+for k in Dic_enzimas.keys(): #Esto sirve símplemente para recorrer el diccionario de las enzimas
+    print('%s tiene valor %s' % (k, Dic_enzimas[k]))
 #Proyecto final asignatura  de Autómatas y Lenguajes Formales, bioinformática
 
 #Primero importamos los archivos necesarios de las bases de datos
