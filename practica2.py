@@ -33,6 +33,10 @@ patron_enzima = r'[A-Z]([A-Za-z]|\d){1,}' #Expresión regular que describe las e
 er_enzima = re.compile(patron_enzima) #Compilamos esta expresión regular
 patron_diana = r'([ATCGRYMKSWBDHVN^]{4,20})(?=$)' #Expresión regular que describe la diana
 er_diana = re.compile(patron_diana) #La compilamos
+patron_sustituye = r'[RYMKSWBDHVN]' #Este es el patrón de todos los caracteres que tenemos que sustituir
+er_sustituye = re.compile(patron_sustituye) #Lo compilamos
+patron_corte = r'\^' #El patrón con el carácter ^
+er_corte = re.compile(patron_corte) #Lo compilamos
 
 Diccionario = {} #Iniciamos el diccionario donde vamos a almacenar las enzimas y sus dianas
 
@@ -50,13 +54,9 @@ for linea in lineasenzimas: #Recorremos todas las lineas del documento que conti
     diana_res = er_diana.search(linea)
     if diana_res:#Si hay una diana en la linea que estamos recorriendo
         diana = linea[diana_res.start():diana_res.end()] #La diana será el trozo de texto que encaja con la expresión regular de las dianas en esa línea
-        patron_sustituye = r'[RYMKSWBDHVN]' #Este es el patrón de todos los caracteres que tenemos que sustituir
-        er_sustituye = re.compile(patron_sustituye) #Lo compilamos
         diana = er_sustituye.sub(sust,diana) #Aqui invocamos la función sust, para sustituir todos los caracteres que tenemos que sustituir
         #print(diana)
         posicion = quitacorte(diana) #Aqui invocamos la función quitacorte que nos dice la posición en la que se halla el carácter ^
-        patron_corte = r'\^' #El patrón con el carácter ^
-        er_corte = re.compile(patron_corte) #Lo compilamos
         diana = er_corte.sub('',diana) #Ahora le quitamos el ^ a las dianas
         #print(diana)
         #print(posicion)
