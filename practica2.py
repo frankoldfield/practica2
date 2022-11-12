@@ -23,21 +23,30 @@ def sust(m):#Esta función sirve para poder sustituir de golpe todas las coincid
 
 genes = open('ALL_C_genes_DNA.txt') #Comienza con una linea en blanco y entre cada bloque de texto hay dos líneas en blanco. En esta variable almacenamos el documento all_c_genes_DNA.txt
 lineasgenes = genes.readlines() #Aqui guardamos las lineas del documento
-for linea in lineasgenes: #Vamos leyendo todas las lineas del documento
-    print(linea)
+
 enzimas = open('link_bionet.txt')#Hay que eliminar las 10 primeras lineas
 lineasenzimas = enzimas.readlines() #Lineas del documento link_bionet.txt
+for linea in lineasgenes: #Vamos leyendo todas las lineas del documento
+    print(linea)
+
 patron_enzima = r'[A-Z]([A-Za-z]|\d){1,}' #Expresión regular que describe las enzimas
 er_enzima = re.compile(patron_enzima) #Compilamos esta expresión regular
 patron_diana = r'([ATCGRYMKSWBDHVN^]{4,20})(?=$)' #Expresión regular que describe la diana
 er_diana = re.compile(patron_diana) #La compilamos
+
 Diccionario = {} #Iniciamos el diccionario donde vamos a almacenar las enzimas y sus dianas
+
+enzima = "" #Inicializamos la variable enzima
+diana = "" #Inicializamos la variable diana
+enzima_anterior = ""
+diana_anterior = ""
+
 for linea in lineasenzimas: #Recorremos todas las lineas del documento que contiene las enzimas
-    enzima='' #Inicializamos la variable enzima
-    diana = '' #Inicializamos la variable diana
+
     enzima_res = er_enzima.search(linea) #Este es un booleano que nos dice si hay una enzima en la linea que estamos recorriendo
     if enzima_res: #Si hay una enzima en la linea que estamos recorriendo
         enzima = linea[enzima_res.start():enzima_res.end()] #Entonces enzima es igual a lo que cumple el patrón de las enzimas en la línea que hemos recorrido
+
     diana_res = er_diana.search(linea)
     if diana_res:#Si hay una diana en la linea que estamos recorriendo
         diana = linea[diana_res.start():diana_res.end()] #La diana será el trozo de texto que encaja con la expresión regular de las dianas en esa línea
@@ -51,7 +60,12 @@ for linea in lineasenzimas: #Recorremos todas las lineas del documento que conti
         diana = er_corte.sub('',diana) #Ahora le quitamos el ^ a las dianas
         #print(diana)
         #print(posicion)
+    if (enzima == enzima_anterior): #Comprobamos si la enzima es la misma que la anterior
+        diana = "("+str(Diccionario.get(enzima_anterior))+"|"+diana+")" #Modificamos la entrada de la diana concatenando lo necesario (hay que hacer casting de la entrada del diccionario)
     Diccionario[enzima] = diana #Añadimos la entrada de esta línea al diccionario, la clave es la encima y el contenido es la diana
+    enzima_anterior=enzima
+    diana_anterior=Diccionario.get(enzima_anterior)
+
 for k in Diccionario.keys(): #Esto sirve símplemente para recorrer el diccionario
     print('%s tiene valor %s' % (k,Diccionario[k]))
 #Proyecto final asignatura  de Autómatas y Lenguajes Formales, bioinformática
