@@ -97,6 +97,7 @@ def leerGenes():
         print('%s tiene valor %s' % (k, Dic_ADN[k]))
 
 def mapaDeDianas(gen):
+    cadenaADN = str(Dic_ADN.get(gen))
     enzimaIntroducida = input("Introduzca una enzima de reconocimiento")
     patron_enzimaIntroducida = "(" + enzimaIntroducida + ")"
     er_enzimaIntroducida = re.compile(patron_enzimaIntroducida)
@@ -115,10 +116,16 @@ def mapaDeDianas(gen):
             for k in Dic_enzimas:
                 if er_enzimaIntroducida.search(k):
                     listadianas.append(Dic_enzimas[k])
+    print('Enzima >> ' + str(patron_enzimaIntroducida))
     for l in listadianas:
         diana = l[0]
+        #print(diana)
         posicionCorte = l[1]
-        mapaDianas = mapaDianas.append(l[0].search(gen).start()+posicionCorte)
+        #print(posicionCorte)
+        for r in diana.finditer(cadenaADN):
+            mapaDianas.append(r.start()+posicionCorte-1)
+        print(gen + ' # ' + str(mapaDianas)) #HpyAII   C.Ykr231ORF3053P
+        mapaDianas = [] #EL PROBLEMA QUE TENGO ES QUE TOMA LO INTRODUCIDO TANTO COMO DIANA COMO ER
 def programa():
     gen = input("Introduzca el nombre del gen deseado")
     if gen == '':
