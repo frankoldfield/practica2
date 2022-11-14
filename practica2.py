@@ -94,8 +94,7 @@ def leerGenes():
 def mapaDeDianas(gen):
     cadenaADN = str(Dic_ADN.get(gen)) #Necesitamos la cadena de ADN como string para imprimirla y para buscar sobre ella
     enzimaIntroducida = input("Introduzca una enzima de reconocimiento") #Esta es la enzima que pedimos al usuario
-    patron_enzimaIntroducida = "(" + enzimaIntroducida + ")" #Tenemos que generar una expresión regular con la entrada por si no fuese una enzima contenida en el diccionario
-    er_enzimaIntroducida = re.compile(patron_enzimaIntroducida)
+    er_enzimaIntroducida = re.compile(enzimaIntroducida)#Tenemos que generar una expresión regular con la entrada por si no fuese una enzima contenida en el diccionario
     listadianas = [] #Esta será la lista de dianas sobre las que tenemos que realizar el mapa de dianas del gen introducido
     mapaDianas = [] #Aqui iremos iterando el mapa de dianas de cada diana
     if enzimaIntroducida == '': #Si la enzima introducida es la cadena vacía
@@ -104,14 +103,14 @@ def mapaDeDianas(gen):
         esEnzima = False #De primeras asumimos que la enzima no se encuentra en el diccionario
         for k in Dic_enzimas: #Recorremos todas las claves del diccionario
             if enzimaIntroducida == k: #Si encontramos que coindide la enzima introducida con una de las claves del diccionario
-                esEnzima == True #Entonces el booleano lo ponemos como verdadero
+                esEnzima = True #Entonces el booleano lo ponemos como verdadero
         if esEnzima: #En caso de que se coincida plenamente con una de las entradas del diccionario
             listadianas.append(enzimaIntroducida) #Entonces se añade a la lista de dianas (No hacemos una variable separada porque sería malgastar espacio, simplemente luego no le añadimos mas entradas)
         else: #En caso de que no se encuentre la enzima en el diccionario
             for k in Dic_enzimas: #Recorremos de nuevo el diccionario
-                if er_enzimaIntroducida.search(k): #Si la clave leída tiene coincidencia con la expresión regular introducida
+                if er_enzimaIntroducida.fullmatch(k): #Si la clave leída tiene coincidencia con la expresión regular introducida
                     listadianas.append(k) #Se añade a la lista esta enzima (La de la clave del diccionario)
-    print('Enzima >> ' + str(patron_enzimaIntroducida)) #Imprimimos la enzima que ha introducido el usuario
+    print('Enzima >> ' + str(enzimaIntroducida)) #Imprimimos la enzima que ha introducido el usuario
     for l in listadianas: #Recorremos la lista de dianas
         diana = Dic_enzimas[l][0] #Cogemos la expresión regular de la diana
         #print(diana)
