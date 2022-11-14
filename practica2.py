@@ -106,20 +106,20 @@ def mapaDeDianas(gen):
             if enzimaIntroducida == k: #Si encontramos que coindide la enzima introducida con una de las claves del diccionario
                 esEnzima == True #Entonces el booleano lo ponemos como verdadero
         if esEnzima: #En caso de que se coincida plenamente con una de las entradas del diccionario
-            listadianas.append(Dic_enzimas[enzimaIntroducida]) #Entonces se añade a la lista de dianas (No hacemos una variable separada porque sería malgastar espacio, simplemente luego no le añadimos mas entradas)
+            listadianas.append(enzimaIntroducida) #Entonces se añade a la lista de dianas (No hacemos una variable separada porque sería malgastar espacio, simplemente luego no le añadimos mas entradas)
         else: #En caso de que no se encuentre la enzima en el diccionario
             for k in Dic_enzimas: #Recorremos de nuevo el diccionario
                 if er_enzimaIntroducida.search(k): #Si la clave leída tiene coincidencia con la expresión regular introducida
-                    listadianas.append(Dic_enzimas[k]) #Se añade a la lista esta enzima (La de la clave del diccionario)
+                    listadianas.append(k) #Se añade a la lista esta enzima (La de la clave del diccionario)
     print('Enzima >> ' + str(patron_enzimaIntroducida)) #Imprimimos la enzima que ha introducido el usuario
     for l in listadianas: #Recorremos la lista de dianas
-        diana = l[0] #Cogemos la expresión regular de la diana
+        diana = Dic_enzimas[l][0] #Cogemos la expresión regular de la diana
         #print(diana)
-        posicionCorte = l[1] #Cogemos la posición de corte de la diana
+        posicionCorte = Dic_enzimas[l][1] #Cogemos la posición de corte de la diana
         #print(posicionCorte)
         for r in diana.finditer(cadenaADN): #Ahora iteramos la cadena de ADN buscando coincidencias con la ER de la diana escogida
             mapaDianas.append(r.start()+posicionCorte-1) #Añadimos la posición de corte al mapa de dianas
-        print(gen + ' # ' + str(mapaDianas)) #Imprimimos el nombre de la enzima y su mapa de dianas HpyAII   C.Ykr231ORF3053P
+        print(l + ' # ' + str(mapaDianas)) #Imprimimos el nombre de la enzima y su mapa de dianas HpyAII   C.Ykr231ORF3053P
         mapaDianas = [] #Reiniciamos la variable del mapa de dianas / EL PROBLEMA QUE TENGO ES QUE TOMA LO INTRODUCIDO TANTO COMO DIANA COMO ER
 def programa():
     gen = input("Introduzca el nombre del gen deseado") #Le pedimos al usuario el nombre del gen que quiere consultar
