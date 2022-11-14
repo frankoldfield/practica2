@@ -119,7 +119,8 @@ def mapaDeDianas(gen):
         #print(posicionCorte)
         for r in diana.finditer(cadenaADN): #Ahora iteramos la cadena de ADN buscando coincidencias con la ER de la diana escogida
             mapaDianas.append(r.start()+posicionCorte-1) #Añadimos la posición de corte al mapa de dianas
-        print(l + ' # ' + str(mapaDianas)) #Imprimimos el nombre de la enzima y su mapa de dianas HpyAII   C.Ykr231ORF3053P
+        if not mapaDianas == []:
+            print(l + ' # ' + str(mapaDianas)) #Imprimimos el nombre de la enzima y su mapa de dianas HpyAII   C.Ykr231ORF3053P
         mapaDianas = [] #Reiniciamos la variable del mapa de dianas / EL PROBLEMA QUE TENGO ES QUE TOMA LO INTRODUCIDO TANTO COMO DIANA COMO ER
 def programa():
     gen = input("Introduzca el nombre del gen deseado") #Le pedimos al usuario el nombre del gen que quiere consultar

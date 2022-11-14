@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c11506f-7dc5-4f59-9b47-b525adec428a" name="Changes" comment="Funciona el programa, los problemas que encuentro son:&#10;&#10;-Toma el gen introducido tanto como enzima como ER&#10;&#10;-Tengo que hacer que aparezca el número de nucleótidos del gen introducido&#10;&#10;-Tengo que hacer que no salgan los mapas de dianas vacíos">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="4c11506f-7dc5-4f59-9b47-b525adec428a" name="Changes" comment="Solucionado que ahora se imprima el nombre de la enzima en vez del nombre del gen (En la función mapaDeEnzimas)&#10;&#10;Ahora en la lista de dianas, en vez de guardar las expresiones regulares se guardan los nombres de las enzimas y más adelante se consultan las expresiones regulares asociadas">
       <change beforePath="$PROJECT_DIR$/practica2.py" beforeDir="false" afterPath="$PROJECT_DIR$/practica2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -122,7 +121,21 @@
       <option name="project" value="LOCAL" />
       <updated>1668338821391</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Varios errores pequeños corregidos.&#10;&#10;Implementado el display del número de nucleótidos&#10;&#10;Código hasta ahora comentado complétamente">
+      <created>1668448776345</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1668448776345</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Solucionado que ahora se imprima el nombre de la enzima en vez del nombre del gen (En la función mapaDeEnzimas)&#10;&#10;Ahora en la lista de dianas, en vez de guardar las expresiones regulares se guardan los nombres de las enzimas y más adelante se consultan las expresiones regulares asociadas">
+      <created>1668449023582</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1668449023582</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -156,6 +169,8 @@
     <MESSAGE value="Implementado el diccionario de cadenas de ADN" />
     <MESSAGE value="He organizado todo por funciones, he corregido errores, he compilado con regex las expresiones regulares del diccionario de enzimas.&#10;&#10;AHORA TENGO QUE PROGRAMAR LA FUNCIÓN MAPADEDIANAS" />
     <MESSAGE value="Funciona el programa, los problemas que encuentro son:&#10;&#10;-Toma el gen introducido tanto como enzima como ER&#10;&#10;-Tengo que hacer que aparezca el número de nucleótidos del gen introducido&#10;&#10;-Tengo que hacer que no salgan los mapas de dianas vacíos" />
-    <option name="LAST_COMMIT_MESSAGE" value="Funciona el programa, los problemas que encuentro son:&#10;&#10;-Toma el gen introducido tanto como enzima como ER&#10;&#10;-Tengo que hacer que aparezca el número de nucleótidos del gen introducido&#10;&#10;-Tengo que hacer que no salgan los mapas de dianas vacíos" />
+    <MESSAGE value="Varios errores pequeños corregidos.&#10;&#10;Implementado el display del número de nucleótidos&#10;&#10;Código hasta ahora comentado complétamente" />
+    <MESSAGE value="Solucionado que ahora se imprima el nombre de la enzima en vez del nombre del gen (En la función mapaDeEnzimas)&#10;&#10;Ahora en la lista de dianas, en vez de guardar las expresiones regulares se guardan los nombres de las enzimas y más adelante se consultan las expresiones regulares asociadas" />
+    <option name="LAST_COMMIT_MESSAGE" value="Solucionado que ahora se imprima el nombre de la enzima en vez del nombre del gen (En la función mapaDeEnzimas)&#10;&#10;Ahora en la lista de dianas, en vez de guardar las expresiones regulares se guardan los nombres de las enzimas y más adelante se consultan las expresiones regulares asociadas" />
   </component>
 </project>
