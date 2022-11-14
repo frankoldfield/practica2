@@ -110,6 +110,9 @@ def mapaDeDianas(gen):
             for k in Dic_enzimas: #Recorremos de nuevo el diccionario
                 if er_enzimaIntroducida.fullmatch(k): #Si la clave leída tiene coincidencia con la expresión regular introducida
                     listadianas.append(k) #Se añade a la lista esta enzima (La de la clave del diccionario)
+    if listadianas == []:
+        print("ERROR: No se ha encontrado ninguna enzima que cumpla con la expresión regular introducida")
+        return
     print('Enzima >> ' + str(enzimaIntroducida)) #Imprimimos la enzima que ha introducido el usuario
     for l in listadianas: #Recorremos la lista de dianas
         diana = Dic_enzimas[l][0] #Cogemos la expresión regular de la diana

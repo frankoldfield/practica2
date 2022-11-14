@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c11506f-7dc5-4f59-9b47-b525adec428a" name="Changes" comment="Ahora no se imprimen los mapas de dianas vacíos.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="4c11506f-7dc5-4f59-9b47-b525adec428a" name="Changes" comment="Ahora está bien formatada la enzimaIntroducida y su expresión regular&#10;&#10;Está solucionado lo de que se tome la enzima tanto como enzima como ER, era porque en vez de esEnzima = True, había puesto esEnzima == True.&#10;&#10;Ahora no se imprimen los mapas de dianas vacíos (Utilizando un condicional que lo comprueba antes de imprimirlo)">
       <change beforePath="$PROJECT_DIR$/practica2.py" beforeDir="false" afterPath="$PROJECT_DIR$/practica2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -143,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668449196572</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Ahora está bien formatada la enzimaIntroducida y su expresión regular&#10;&#10;Está solucionado lo de que se tome la enzima tanto como enzima como ER, era porque en vez de esEnzima = True, había puesto esEnzima == True.&#10;&#10;Ahora no se imprimen los mapas de dianas vacíos (Utilizando un condicional que lo comprueba antes de imprimirlo)">
+      <created>1668450584505</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1668450584505</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -180,6 +186,7 @@
     <MESSAGE value="Varios errores pequeños corregidos.&#10;&#10;Implementado el display del número de nucleótidos&#10;&#10;Código hasta ahora comentado complétamente" />
     <MESSAGE value="Solucionado que ahora se imprima el nombre de la enzima en vez del nombre del gen (En la función mapaDeEnzimas)&#10;&#10;Ahora en la lista de dianas, en vez de guardar las expresiones regulares se guardan los nombres de las enzimas y más adelante se consultan las expresiones regulares asociadas" />
     <MESSAGE value="Ahora no se imprimen los mapas de dianas vacíos." />
-    <option name="LAST_COMMIT_MESSAGE" value="Ahora no se imprimen los mapas de dianas vacíos." />
+    <MESSAGE value="Ahora está bien formatada la enzimaIntroducida y su expresión regular&#10;&#10;Está solucionado lo de que se tome la enzima tanto como enzima como ER, era porque en vez de esEnzima = True, había puesto esEnzima == True.&#10;&#10;Ahora no se imprimen los mapas de dianas vacíos (Utilizando un condicional que lo comprueba antes de imprimirlo)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ahora está bien formatada la enzimaIntroducida y su expresión regular&#10;&#10;Está solucionado lo de que se tome la enzima tanto como enzima como ER, era porque en vez de esEnzima = True, había puesto esEnzima == True.&#10;&#10;Ahora no se imprimen los mapas de dianas vacíos (Utilizando un condicional que lo comprueba antes de imprimirlo)" />
   </component>
 </project>
