@@ -50,13 +50,13 @@ def leerEnzimas():
             diana = er_corte.sub('', diana)  # Ahora le quitamos el ^ a las dianas
 
         if (enzima == enzima_anterior):  # Comprobamos si la enzima es la misma que la anterior
-            diana = "(" + str(Dic_enzimas.get(enzima_anterior)[0]) + "|" + diana + ")"  # Modificamos la entrada de la diana concatenando lo necesario (hay que hacer casting de la entrada del diccionario)
+            diana = str(Dic_enzimas.get(enzima_anterior)[0]) + "|" + diana  # Modificamos la entrada de la diana concatenando lo necesario (hay que hacer casting de la entrada del diccionario)
         Dic_enzimas[enzima] = [diana,posicion]  # Añadimos la entrada de esta línea al diccionario, la clave es la encima y el contenido es la diana
         enzima_anterior = enzima  # Aqui guardamos la enzima para que se compruebe si en la siguiente línea vuelve a aparecer la misma
 
     for k in Dic_enzimas.keys():  # Este bucle sirve para recorrer el diccionario de las enzimas
         Dic_enzimas[k][0] = re.compile("(" + Dic_enzimas.get(k)[0] + ")") #Compilamos todas las er de las enzimas del diccionario de golpe
-        #print('%s tiene valor %s' % (k, Dic_enzimas[k]))
+        print('%s tiene valor %s' % (k, Dic_enzimas[k]))
 
 def leerGenes():
     print("Cargando All_C_genes_DNA.txt...")
@@ -100,12 +100,8 @@ def mapaDeDianas(gen):
     if enzimaIntroducida == '': #Si la enzima introducida es la cadena vacía
         return #Salimos de la función
     else:
-        esEnzima = False #De primeras asumimos que la enzima no se encuentra en el diccionario
-        for k in Dic_enzimas: #Recorremos todas las claves del diccionario
-            if enzimaIntroducida == k: #Si encontramos que coindide la enzima introducida con una de las claves del diccionario
-                esEnzima = True #Entonces el booleano lo ponemos como verdadero
-        if esEnzima: #En caso de que se coincida plenamente con una de las entradas del diccionario
-            listadianas.append(enzimaIntroducida) #Entonces se añade a la lista de dianas (No hacemos una variable separada porque sería malgastar espacio, simplemente luego no le añadimos mas entradas)
+        if enzimaIntroducida in Dic_enzimas.keys(): #Si encontramos que coindide la enzima introducida con una de las claves del diccionario
+            listadianas.append( enzimaIntroducida)  # Entonces se añade a la lista de dianas (No hacemos una variable separada porque sería malgastar espacio, simplemente luego no le añadimos mas entradas)
         else: #En caso de que no se encuentre la enzima en el diccionario
             for k in Dic_enzimas: #Recorremos de nuevo el diccionario
                 if er_enzimaIntroducida.fullmatch(k): #Si la clave leída tiene coincidencia con la expresión regular introducida
