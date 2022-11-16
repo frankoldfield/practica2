@@ -1,6 +1,6 @@
 import regex as re
 import urllib.request
-import sys
+import ssl
 
 Dic_ADN = {}  # Iniciamos el diccionario donde vamos a almacenar las cadenas de ADN
 Dic_enzimas = {}  # Iniciamos el diccionario donde vamos a almacenar las enzimas y sus dianas
@@ -24,9 +24,6 @@ def sust(m):#Esta función sirve para poder sustituir de golpe todas las coincid
     return listaret #Devolvemos la cadena completada
 
 def leerEnzimas():
-    print("Cargando bionet...")
-    enzimas = open('link_bionet.txt')  # Hay que eliminar las 10 primeras lineas
-    lineasenzimas = enzimas.readlines()  # Lineas del documento link_bionet.txt
     patron_enzima = r'[A-Z]([A-Za-z]|\d){1,}'  # Expresión regular que describe las enzimas
     er_enzima = re.compile(patron_enzima)  # Compilamos esta expresión regular
     patron_diana = r'([ATCGRYMKSWBDHVN^]{4,20})(?=$)'  # Expresión regular que describe las dianas
@@ -37,22 +34,36 @@ def leerEnzimas():
     diana = ""  # Inicializamos la variable diana
     enzima_anterior = " "  # Aqui inicializamos la variable enzima_anterior
     posicion = 0
-    for linea in lineasenzimas:  # Recorremos todas las lineas del documento que contiene las enzimas
-        enzima_res = er_enzima.search(linea)  # Este es un booleano que nos dice si hay una enzima en la linea que estamos recorriendo
-        if enzima_res:  # Si hay una enzima en la linea que estamos recorriendo
-            enzima = linea[enzima_res.start():enzima_res.end()]  # Entonces enzima es igual a lo que cumple el patrón de las enzimas en la línea que hemos recorrido
+    print("Cargando bionet...")
+    try:
+        url = 'https://aulavirtual.um.es/access/content/group/1896_G_2022_N_N/PRACTICAS/PRACTICA%202/link_bionet.txt'
+        context = ssl.create_default_context()
+        context.set_ciphers("DEFAULT")
+        link = urllib.request.urlopen(url, context=context)
+        contador = 0
+        for linea in link:
+            linea = linea.decode().strip()
+            if contador > 9:
+                enzima_res = er_enzima.search(linea)  # Este es un booleano que nos dice si hay una enzima en la linea que estamos recorriendo
+                if enzima_res:  # Si hay una enzima en la linea que estamos recorriendo
+                    enzima = linea[enzima_res.start():enzima_res.end()]  # Entonces enzima es igual a lo que cumple el patrón de las enzimas en la línea que hemos recorrido
+                diana_res = er_diana.search(linea)
+                if diana_res:  # Si hay una diana en la linea que estamos recorriendo
+                    diana = linea[diana_res.start():diana_res.end()]  # La diana será el trozo de texto que encaja con la expresión regular de las dianas en esa línea
+                    posicion = quitacorte(diana)  # Aqui invocamos la función quitacorte que nos dice la posición en la que se halla el carácter ^
+                    diana = er_sustituye.sub(sust,diana)  # Aqui invocamos la función sust, para sustituir todos los caracteres que tenemos que sustituir
+                    diana = er_corte.sub('', diana)  # Ahora le quitamos el ^ a las dianas
+                if (enzima == enzima_anterior):  # Comprobamos si la enzima es la misma que la anterior
+                    diana = str(Dic_enzimas.get(enzima_anterior)[0]) + "|" + diana  # Modificamos la entrada de la diana concatenando lo necesario (hay que hacer casting de la entrada del diccionario)
+                Dic_enzimas[enzima] = [diana,posicion]  # Añadimos la entrada de esta línea al diccionario, la clave es la encima y el contenido es la diana
+                enzima_anterior = enzima  # Aqui guardamos la enzima para que se compruebe si en la siguiente línea vuelve a aparecer la misma
+            else:
+                contador += 1
+    except IOError as e:
+        print('link_bionet no disponible:', e)
 
-        diana_res = er_diana.search(linea)
-        if diana_res:  # Si hay una diana en la linea que estamos recorriendo
-            diana = linea[diana_res.start():diana_res.end()]  # La diana será el trozo de texto que encaja con la expresión regular de las dianas en esa línea
-            posicion = quitacorte(diana)  # Aqui invocamos la función quitacorte que nos dice la posición en la que se halla el carácter ^
-            diana = er_sustituye.sub(sust,diana)  # Aqui invocamos la función sust, para sustituir todos los caracteres que tenemos que sustituir
-            diana = er_corte.sub('', diana)  # Ahora le quitamos el ^ a las dianas
+    #for linea in lineasenzimas:  # Recorremos todas las lineas del documento que contiene las enzimas
 
-        if (enzima == enzima_anterior):  # Comprobamos si la enzima es la misma que la anterior
-            diana = str(Dic_enzimas.get(enzima_anterior)[0]) + "|" + diana  # Modificamos la entrada de la diana concatenando lo necesario (hay que hacer casting de la entrada del diccionario)
-        Dic_enzimas[enzima] = [diana,posicion]  # Añadimos la entrada de esta línea al diccionario, la clave es la encima y el contenido es la diana
-        enzima_anterior = enzima  # Aqui guardamos la enzima para que se compruebe si en la siguiente línea vuelve a aparecer la misma
 
     for k in Dic_enzimas.keys():  # Este bucle sirve para recorrer el diccionario de las enzimas
         Dic_enzimas[k][0] = re.compile("(" + Dic_enzimas.get(k)[0] + ")") #Compilamos todas las er de las enzimas del diccionario de golpe
@@ -73,21 +84,28 @@ def leerGenes():
     cadenaADN = '' #Inicializamos la variable que va a contener la cadena de ADN en cada iteración
     patron_juntarCadena = r'( |\n|\r|\t)' #Esta expresión regular la vamos a utilizar para sustituir los caracteres no deseados de las cadenas de ADN
     er_juntarCadena = re.compile(patron_juntarCadena) #La compilamos
-    for linea in lineasgenes:
-        nombreCadenaADN_res = er_nombreCadenaADN.search(linea) #Este es el booleano que nos va a indicar en cada caso si se ha encontrado el nombre de un gen
-        cadenaADN_res = er_cadenaADN.search(linea) #Este es el booleano que nos va a indicar en cada caso si se ha encontrado una cadena de ADN en la línea
-        numNucleotidos_res = er_numNucleotidos.search(linea) #Este es el booleano que nos va a indicar en cada caso si se ha encontrado un número de nucleótidos en la línea
-        if nombreCadenaADN_res:#Si la linea contiene un nombre de cadena
-            cadenaADN = er_juntarCadena.sub('', cadenaADN)  # entonces guardamos la cadena de ADN, la formatamos
-            Dic_ADN[nombreCadenaADN] = [cadenaADN,numNucleotidos]  # Y metemos en el diccionario la entrada
-            cadenaADN = ' '  # reseteamos la variable de cadena de adn a una cadena vacía
-            nombreCadenaADN = linea[nombreCadenaADN_res.start():nombreCadenaADN_res.end()]#entonces guardamos el nombre de la cadena
-            numNucleotidos = linea[numNucleotidos_res.start():numNucleotidos_res.end()]#guardamos el número de nucleótidos de ese gen
-        elif cadenaADN_res:#elif si la linea contiene cadena de adn
-            cadenaADN = cadenaADN+linea[cadenaADN_res.start():cadenaADN_res.end()]#la concatenamos a la variable cadena de adn existente
-    cadenaADN = er_juntarCadena.sub('', cadenaADN) #Tenemos que realizar esta última iteración fuera del bucle porque el último gen no se almacena, ya que hemos hecho que almacenarlo en el diccionario se realice \\
-    Dic_ADN[nombreCadenaADN] = [cadenaADN, numNucleotidos] #Cuando encontramos el siguiente gen
-
+    try:
+        url = 'https://aulavirtual.um.es/access/content/group/1896_G_2022_N_N/PRACTICAS/PRACTICA%202/All_C_genes_DNA.txt'
+        context = ssl.create_default_context()
+        context.set_ciphers("DEFAULT")
+        link = urllib.request.urlopen(url, context=context)
+        for linea in link:
+            linea = linea.decode().strip()
+            nombreCadenaADN_res = er_nombreCadenaADN.search(linea) #Este es el booleano que nos va a indicar en cada caso si se ha encontrado el nombre de un gen
+            cadenaADN_res = er_cadenaADN.search(linea) #Este es el booleano que nos va a indicar en cada caso si se ha encontrado una cadena de ADN en la línea
+            numNucleotidos_res = er_numNucleotidos.search(linea) #Este es el booleano que nos va a indicar en cada caso si se ha encontrado un número de nucleótidos en la línea
+            if nombreCadenaADN_res:#Si la linea contiene un nombre de cadena
+                cadenaADN = er_juntarCadena.sub('', cadenaADN)  # entonces guardamos la cadena de ADN, la formatamos
+                Dic_ADN[nombreCadenaADN] = [cadenaADN,numNucleotidos]  # Y metemos en el diccionario la entrada
+                cadenaADN = ' '  # reseteamos la variable de cadena de adn a una cadena vacía
+                nombreCadenaADN = linea[nombreCadenaADN_res.start():nombreCadenaADN_res.end()]#entonces guardamos el nombre de la cadena
+                numNucleotidos = linea[numNucleotidos_res.start():numNucleotidos_res.end()]#guardamos el número de nucleótidos de ese gen
+            elif cadenaADN_res:#elif si la linea contiene cadena de adn
+                cadenaADN = cadenaADN+linea[cadenaADN_res.start():cadenaADN_res.end()]#la concatenamos a la variable cadena de adn existente
+        cadenaADN = er_juntarCadena.sub('', cadenaADN) #Tenemos que realizar esta última iteración fuera del bucle porque el último gen no se almacena, ya que hemos hecho que almacenarlo en el diccionario se realice \\
+        Dic_ADN[nombreCadenaADN] = [cadenaADN, numNucleotidos] #Cuando encontramos el siguiente gen
+    except IOError as e:
+        print('All_C_genes_DNA no disponible:', e)
     #for k in Dic_ADN.keys():  # Esto sirve símplemente para recorrer el diccionario de los genes
         #print('%s tiene valor %s' % (k, Dic_ADN[k]))
 
@@ -112,11 +130,9 @@ def mapaDeDianas(gen):
     print('Enzima >> ' + str(enzimaIntroducida)) #Imprimimos la enzima que ha introducido el usuario
     for l in listadianas: #Recorremos la lista de dianas
         diana = Dic_enzimas[l][0] #Cogemos la expresión regular de la diana
-        #print(diana)
         posicionCorte = Dic_enzimas[l][1] #Cogemos la posición de corte de la diana
-        #print(posicionCorte)
         for r in diana.finditer(cadenaADN): #Ahora iteramos la cadena de ADN buscando coincidencias con la ER de la diana escogida
-            mapaDianas.append(r.start()+posicionCorte-1) #Añadimos la posición de corte al mapa de dianas
+            mapaDianas.append(r.start()+posicionCorte-2) #Añadimos la posición de corte al mapa de dianas (Ponemos -2 porque tenemos que descontar las posiciones 0 de las variables utilizadas)
         if not mapaDianas == []:
             print(l + ' # ' + str(mapaDianas)) #Imprimimos el nombre de la enzima y su mapa de dianas HpyAII   C.Ykr231ORF3053P
         mapaDianas = [] #Reiniciamos la variable del mapa de dianas / EL PROBLEMA QUE TENGO ES QUE TOMA LO INTRODUCIDO TANTO COMO DIANA COMO ER
