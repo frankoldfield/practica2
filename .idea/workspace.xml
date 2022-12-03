@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c11506f-7dc5-4f59-9b47-b525adec428a" name="Changes" comment="Ahora los documentos ya se leen desde la web&#10;&#10;Los mapas de dianas han sido ajustados">
+    <list default="true" id="4c11506f-7dc5-4f59-9b47-b525adec428a" name="Changes" comment="En un principio funciona perfecto, falta corregir casos que no deberían darse (mapas de dianas que deberían ser vaciós y sin embargo no lo son)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/practica2.py" beforeDir="false" afterPath="$PROJECT_DIR$/practica2.py" afterDir="false" />
     </list>
@@ -173,7 +173,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668603573100</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="En un principio funciona perfecto, falta corregir casos que no deberían darse (mapas de dianas que deberían ser vaciós y sin embargo no lo son)">
+      <created>1668624510937</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1668624510937</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -214,6 +221,7 @@
     <MESSAGE value="Ahora está bien formatada la enzimaIntroducida y su expresión regular&#10;&#10;Está solucionado lo de que se tome la enzima tanto como enzima como ER, era porque en vez de esEnzima = True, había puesto esEnzima == True.&#10;&#10;Ahora no se imprimen los mapas de dianas vacíos (Utilizando un condicional que lo comprueba antes de imprimirlo)&#10;&#10;Y AHORA: Si no se encuentran enzimas que cumplan la expresión regular introducida, se informa al usuario." />
     <MESSAGE value="Ahora la consulta del diccionario se hace de manera correcta&#10;&#10;Y ahora las cadenas de las enzimas para guardarse en el diccionario no se ponen paréntesis innecesarios" />
     <MESSAGE value="Ahora los documentos ya se leen desde la web&#10;&#10;Los mapas de dianas han sido ajustados" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ahora los documentos ya se leen desde la web&#10;&#10;Los mapas de dianas han sido ajustados" />
+    <MESSAGE value="En un principio funciona perfecto, falta corregir casos que no deberían darse (mapas de dianas que deberían ser vaciós y sin embargo no lo son)" />
+    <option name="LAST_COMMIT_MESSAGE" value="En un principio funciona perfecto, falta corregir casos que no deberían darse (mapas de dianas que deberían ser vaciós y sin embargo no lo son)" />
   </component>
 </project>
