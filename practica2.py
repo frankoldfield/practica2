@@ -139,8 +139,6 @@ def pideEnzima(gen):
                 if match.group(i+1):
                     mapaDianas.append(match.start()+Dic_enzimas[l][1][i]-2) #Añadimos la posición de corte al mapa de dianas (Ponemos -2 porque tenemos que descontar las posiciones 0 de las variables utilizadas)
                 i += 1
-            #posicionCorte = Dic_enzimas[l][1][match.group(diana)]  # Cogemos la posición de corte de la diana
-            #mapaDianas.append(match.start()+posicionCorte-2)
         if not mapaDianas == []:
             print(l + ' # ' + str(mapaDianas)) #Imprimimos el nombre de la enzima y su mapa de dianas
         mapaDianas = [] #Reiniciamos la variable del mapa de dianas / EL PROBLEMA QUE TENGO ES QUE TOMA LO INTRODUCIDO TANTO COMO DIANA COMO ER
